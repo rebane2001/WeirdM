@@ -3,7 +3,7 @@
 
 const { createFFmpeg } = FFmpeg;
 
-const ffmpeg = createFFmpeg({ log: true });
+let ffmpeg = createFFmpeg({ log: true });
 let fps = "15";
 let crf = "42";
 let mode = "trim";
@@ -20,6 +20,43 @@ const setProgress = (percentage) => {
     }
 }
 
+const recycleFFmpeg = async () => {
+    let files = [];
+    files.push(['input.avi', ffmpeg.FS('readFile', 'input.avi')]);
+    ffmpeg.FS('unlink', 'input.avi')
+    let i = 0;
+    while (true) {
+        i++;
+        const fn = i.toString().padStart(6, '0') + '.png';
+        try {
+            files.push([fn, ffmpeg.FS('readFile', fn)]);
+            ffmpeg.FS('unlink', fn);
+        } catch {
+            break;
+        }
+    }
+    i = 0;
+    while (true) {
+        const fn = i.toString() + '.webm';
+        try {
+            files.push([fn, ffmpeg.FS('readFile', fn)]);
+            ffmpeg.FS('unlink', fn);
+        } catch {
+            break;
+        }
+        i++;
+    }
+    try {
+        ffmpeg.exit();
+    } catch {}
+    ffmpeg = createFFmpeg({ log: true });
+    if (!ffmpeg.isLoaded()) await ffmpeg.load();
+    for (i = 0; i < files.length; ++i) {
+        ffmpeg.FS('writeFile', files[i][0], files[i][1]);
+        files[i][1] = null;
+    }
+};
+
 const makeWebmPart = async (inArgs, webmCount) => {
     let concat = "";
     inArgs.forEach((arg) => {
@@ -27,9 +64,13 @@ const makeWebmPart = async (inArgs, webmCount) => {
     });
     ffmpeg.FS('writeFile', 'concat.txt', Uint8Array.from(concat.split('').map(letter => letter.charCodeAt(0))));
     await ffmpeg.run('-y', '-f', 'concat', '-i', 'concat.txt', '-vf', `settb=AVTB,setpts=N/${fps}/TB,fps=${fps}`, '-crf', crf, '-r', fps, webmCount + '.webm');
+    /*
     inArgs.forEach((arg) => {
         ffmpeg.FS('unlink', arg);
     });
+     */
+    // Wipe worker processes every 10 webms to prevent OOM
+    if (webmCount % 10 === 0) await recycleFFmpeg();
 };
 
 function getRandomResize(frame) {
@@ -146,7 +187,6 @@ startBtn.onclick = () => {
         crf = document.getElementById("crf").value;
         makeVideo(array).then((final) => {
             downloadBlob(final, filename);
-            filePicker.value = null;
             startBtn.disabled = false;
             startBtn.innerText = "Go!";
             setProgress(-1);
