@@ -128,7 +128,7 @@ const makeVideo = async (file) => {
         const file = ffmpeg.FS('readFile', fn);
 
         const args = {
-            trim: ["convert", "in.png", "-trim", "+repage", "-set", "filename:mysize", "%wx%h", "%[filename:mysize]"],
+            trim: ["convert", "in.png", "-trim", "-shave", "1x1", "+repage", "-set", "filename:mysize", "%wx%h", "%[filename:mysize]"],
             bounce: ["convert", "in.png", "-resize", getBounceResize(frame), "-set", "filename:mysize", "%wx%h", "%[filename:mysize]"],
             random: ["convert", "in.png", "-resize", getRandomResize(frame), "-set", "filename:mysize", "%wx%h", "%[filename:mysize]"],
         }[mode];
