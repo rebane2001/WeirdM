@@ -190,6 +190,9 @@ startBtn.onclick = () => {
             startBtn.disabled = false;
             startBtn.innerText = "Go!";
             setProgress(-1);
+            try {
+                ffmpeg.exit();
+            } catch {}
         });
     }
     reader.readAsArrayBuffer(filePicker.files[0]);
