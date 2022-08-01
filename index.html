@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="stylesheet" type="text/css" href="app.css">
+    <script crossorigin="anonymous"
+            src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.10.1/dist/ffmpeg.min.js"></script>
+    <script type="module">
+        import * as Magick from 'https://cdn.jsdelivr.net/npm/wasm-imagemagick@1.2.8/dist/magickApi.js';
+        window.Magick = Magick;
+    </script>
+    <title>WeirdM - Resizing WebM maker</title>
+    <meta charset="UTF-8">
+</head>
+<body>
+<h1>WeirdM</h1>
+<div class="container">
+    <h3>About</h3>
+    <p>WeirdM lets you create those weird WebM videos that resize as they play, from simple effects that work with
+        any video to advanced custom animations you can create yourself.</p>
+    <p>The processing happens locally in your browser, so your videos do not get sent to my server.
+        The source code is available on <a href="https://github.com/rebane2001/weirdm">GitHub</a>.</p>
+    <h3>Guide</h3>
+    <p>Coming soon...</p>
+    <h3>Options</h3>
+    <input type="radio" id="bounce" name="mode" checked>
+    <label for="bounce">Bounce (simple)</label><br>
+    <input type="radio" id="random" name="mode">
+    <label for="random">Random (simple)</label><br>
+    <input type="radio" id="trim" name="mode">
+    <label for="trim">Trim (advanced)</label><br>
+    <br>
+    <div id="bounce-options">
+        <b>Horizontal</b><br>
+        <label for="bounce-h-style">Style:</label>
+        <select id="bounce-h-style">
+            <option value="sin">Sin</option>
+            <option value="cos">Cos</option>
+            <option value="none" selected="selected">None</option>
+        </select><br>
+        <label for="bounce-h-speed">Speed:</label>
+        <input id="bounce-h-speed" type="number" min="1" max="50" value="10"><br>
+        <br>
+        <b>Vertical</b><br>
+        <label for="bounce-v-style">Style:</label>
+        <select id="bounce-v-style">
+            <option value="sin" selected="selected">Sin</option>
+            <option value="cos">Cos</option>
+            <option value="none">None</option>
+        </select><br>
+        <label for="bounce-v-speed">Speed:</label>
+        <input id="bounce-v-speed" type="number" min="1" max="50" value="10"><br>
+    </div>
+    <div id="random-options" style="display: none">
+        <input type="checkbox" id="random-h" checked>
+        <label for="random-h">Horizontal</label><br>
+        <input type="checkbox" id="random-v" checked>
+        <label for="random-v">Vertical</label><br>
+    </div>
+    <div id="trim-options" style="display: none">
+        <p>Trim removes a solid color or transparency from all 4 borders of your video. Please check out the guide for more info.</p>
+    </div>
+    <br><label for="crf">CRF (quality, lower is better):</label>
+    <input id="crf" type="number" min="0" max="63" value="42"><br>
+    <h3>Pick a file</h3>
+    <input type="file" id="filepicker"/><br><br>
+    <button class="button start">Go!</button>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
