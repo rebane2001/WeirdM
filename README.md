@@ -1,6 +1,8 @@
 # WeirdM
 WeirdM lets you create those weird WebM videos that resize as they play, from simple effects that work with any video to advanced custom animations you can create yourself.
 
+You can use WeirdM online at **https://rebane2001.com/weirdm/**.
+
 ## Guide
 
 | Discord RESIZING WebMs tutorial (easiest method, NO DOWNLOADS) |
