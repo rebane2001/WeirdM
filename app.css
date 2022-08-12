@@ -21,7 +21,7 @@ a,a:visited {
     color: #00AFF4
 }
 
-.button {
+button {
     min-height: 32px;
     min-width: 32px;
     border: none;
