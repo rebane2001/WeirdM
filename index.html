@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="app.css">
     <script crossorigin="anonymous"
             src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.10.1/dist/ffmpeg.min.js"></script>
@@ -13,7 +16,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-<h1>WeirdM</h1>
+<h1 id="top">WeirdM</h1>
 <div class="container">
     <h3>About</h3>
     <p>WeirdM lets you create those weird WebM videos that resize as they play, from simple effects that work with
@@ -21,7 +24,8 @@
     <p>The processing happens locally in your browser, so your videos do not get sent to my server.
         The source code is available on <a href="https://github.com/rebane2001/weirdm">GitHub</a>.</p>
     <h3>Guide</h3>
-    <p>A video tutorial is available <a href="https://www.youtube.com/watch?v=Wf2filWCcJo">here</a>.</p>
+    <p>A video tutorial is available <a href="#tutorial">here</a>.</p>
+    <p>Convert videos to WebM <a href="https://cloudconvert.com/mp4-to-webm">here</a>.</p> <!-- used mp4 bc its most common -->
     <h3>Options</h3>
     <input type="radio" id="bounce" name="mode" checked>
     <label for="bounce">Bounce (simple)</label><br>
@@ -64,8 +68,10 @@
     <input id="crf" type="number" min="0" max="63" value="42"><br>
     <h3>Pick a file</h3>
     <input type="file" id="filepicker"/><br><br>
-    <button class="button start">Go!</button>
+    <button class="start">Go!</button>
 </div>
 <script src="app.js"></script>
+<br><br><iframe width="560" height="315" src="https://www.youtube.com/embed/Wf2filWCcJo" title="Video Tutorial" id="tutorial" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<br><br><button onclick="window.location.href='#top'">Back to top!</button>
 </body>
 </html>
