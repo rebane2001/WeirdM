@@ -63,7 +63,7 @@ const makeWebmPart = async (inArgs, webmCount) => {
         concat += `file ${arg}\n`;
     });
     ffmpeg.FS('writeFile', 'concat.txt', Uint8Array.from(concat.split('').map(letter => letter.charCodeAt(0))));
-    await ffmpeg.run('-y', '-f', 'concat', '-i', 'concat.txt', '-vf', `settb=AVTB,setpts=N/${fps}/TB,fps=${fps}`, '-crf', crf, '-r', fps, webmCount + '.webm');
+    await ffmpeg.run('-y', '-f', 'concat', '-i', 'concat.txt', '-vf', `settb=AVTB,setpts=N/${fps}/TB,fps=${fps}`, '-pix_fmt', 'yuv420p', '-crf', crf, '-r', fps, webmCount + '.webm');
     /*
     inArgs.forEach((arg) => {
         ffmpeg.FS('unlink', arg);
